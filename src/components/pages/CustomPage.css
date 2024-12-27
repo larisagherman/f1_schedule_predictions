@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'PT Sans', sans-serif;
+  }
+  
+  .home,
+  .services,
+  .products,
+  .sign-up {
+    display: flex;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  
+  .make-prediction {
+    background-image: url('../assets/b1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    font-size: 100px;
+  }
+  
+  .view-race-schedule {
+    background-image: url('../assets/b1.jpg');
+    background-position: center;
+    background-size: fill;
+    background-repeat: no-repeat;
+    color: rgb(186, 138, 138);
+    font-size: 100px;
+  }
+  
+  .about {
+    background-image: url('../assets/b1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    font-size: 100px;
+  }
+/* Center the greeting and make the text white */
+/* App.css or your custom .css file for ProfilePage */
+.profile-greeting {
+    height: 40vh;  /* Adjust to your liking */
+    text-align: center;
+    color: white;  /* White text */
+    font-size: 1.5rem; /* Adjust the size of the text */
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg,rgb(133, 7, 7) 0%, rgb(210, 0, 0) 100%);
+  }
+  
+  
+  

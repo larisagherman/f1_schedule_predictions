@@ -1,0 +1,108 @@
+/* Container for the whole sign-in form */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  /* Header section */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Title text (Sign Up) */
+  .text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Input fields container */
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Each input wrapper */
+  .input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  /* Input fields styling */
+  .input input {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  /* Forgot password link */
+  .forgot-password {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .forgot-password span {
+    color: rgb(186, 138, 138);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  /* Submit buttons container */
+.submit-container {
+  display: flex; /* Flexbox for alignment */
+  justify-content: center; /* Center the button horizontally */
+  align-items: center; /* Center the button vertically */
+  width: 100%; /* Full width for container */
+  margin-top: 20px; /* Add spacing from the input fields */
+}
+
+/* Submit button styles */
+.submit {
+  width: auto; /* Allow the button to size itself based on content */
+  padding: 15px 40px; /* Adjust padding for better proportions */
+  height: auto; /* Remove fixed height */
+  color: #fff; /* Text color */
+  background: rgb(210, 0, 0); /* Red background */
+  border-radius: 50px; /* Rounded corners */
+  font-size: 19px; /* Font size */
+  font-weight: 700; /* Bold font */
+  cursor: pointer; /* Pointer cursor on hover */
+  text-align: center; /* Center the text */
+  display: flex; /* Flex for alignment */
+  justify-content: center; /* Horizontal center */
+  align-items: center; /* Vertical center */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Hover effects */
+}
+
+.submit:hover {
+  background-color: rgb(186, 138, 138); /* Darker shade of red on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+  
+  

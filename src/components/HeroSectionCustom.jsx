@@ -9,8 +9,6 @@ function HeroSection() {
     <div className='hero-container'>
           <video src={vid1}
               autoPlay loop muted />
-        <h1>Drive to Predict</h1>
-        <p> What are you waiting for? SIGN IN and make a prediction now!</p>
         <div className='hero-btns'>
               <Button className='btns' buttonStyle='btn--outline'
                   buttonSize='btn--large'>
