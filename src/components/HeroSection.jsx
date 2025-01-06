@@ -3,8 +3,14 @@ import '../App.css'
 import { Button } from './Button'
 import './HeroSection.css'
 import { vid1 } from '../assets'
+import { useNavigate } from 'react-router-dom'
 
 function HeroSection() {
+  const navigate = useNavigate();
+
+  const handleRaceViewClick = () => {
+    navigate('/ViewRaceSchedule');
+  };
   return (
     <div className='hero-container'>
           <video src={vid1}
@@ -17,7 +23,7 @@ function HeroSection() {
                   MAKE PREDICTION
               </Button> 
               <Button className='btns' buttonStyle='btn--primary'
-                  buttonSize='btn--large'>
+                  buttonSize='btn--large' onClick={handleRaceViewClick}>
                   VIEW RACES <i className='far fa-play-circle'/>
               </Button> 
         </div>    

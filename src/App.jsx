@@ -7,6 +7,7 @@ import SignInForm from './components/pages/SignInWithGoogle.jsx';
 import CustomPage from './components/pages/CustomPage.jsx';
 import HomeCustom from './components/pages/HomeCustom.jsx';
 import About from './components/pages/About.jsx';
+import ViewRaceSchedule from './components/pages/ViewRaceSchedule.jsx';
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
         <Route path="/CustomPage" element={<CustomPage />} />
         <Route path="/HomeCustom" element={<CustomPage />} />
         <Route path="/about" element={<About />} />
-
+        <Route path="/ViewRaceSchedule" element={<ViewRaceSchedule />} />
 
       </Routes>
     </BrowserRouter>

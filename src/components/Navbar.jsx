@@ -62,6 +62,9 @@ function Navbar() {
             navigate('/');
         }
     };
+    const handleViewRaceScheduleClick = () => {
+        navigate('/ViewRaceSchedule');
+    };
 
     window.addEventListener('resize', showButton);
 
@@ -93,9 +96,12 @@ function Navbar() {
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/view-race-schedule' className='nav-links' onClick={closeMobileMenu}>
+                            <span
+                                className='nav-links'
+                                onClick={() => { closeMobileMenu(); handleViewRaceScheduleClick(); }}
+                            >
                                 View Race Schedule
-                            </Link>
+                            </span>
                         </li>
                         <li className='nav-item'>
                             <Link to='/about' className='nav-links' onClick={closeMobileMenu}>
@@ -113,7 +119,7 @@ function Navbar() {
                             </Button>
                         ) : (
                             <Link to="/SignInWithGoogle">
-                                <Button buttonStyle="btn--outline">
+                                <Button buttonStyle="btn--outline" linkTo="/SignInForm">
                                     SIGN IN
                                 </Button>
                             </Link>
