@@ -65,6 +65,14 @@ function Navbar() {
     const handleViewRaceScheduleClick = () => {
         navigate('/ViewRaceSchedule');
     };
+    const handleMakePredictionClick = () => {
+        if (isSignedIn) {
+        navigate('/MakePrediction');
+        }
+        else {
+            navigate('/');
+        }
+    };
 
     window.addEventListener('resize', showButton);
 
@@ -75,7 +83,7 @@ function Navbar() {
                     <div className='navbar-logo'>
                         <span   className='nav-links'
                                 onClick={() => { closeMobileMenu(); handlePitStopClick(); }}>
-                            PIT STOP <i className='fab fa-bars' />
+                            PIT STOP 
                         </span>
                     </div>
                     <div className='menu-icon' onClick={handleClick}>
@@ -91,9 +99,12 @@ function Navbar() {
                             </span>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/make-prediction' className='nav-links' onClick={closeMobileMenu}>
+                            <span
+                                className='nav-links'
+                                onClick={() => { closeMobileMenu(); handleMakePredictionClick(); }}
+                            >
                                 Make Prediction
-                            </Link>
+                            </span>
                         </li>
                         <li className='nav-item'>
                             <span

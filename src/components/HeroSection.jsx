@@ -11,6 +11,9 @@ function HeroSection() {
   const handleRaceViewClick = () => {
     navigate('/ViewRaceSchedule');
   };
+  const handleMakePredictionClick = () => {
+    navigate('/SignInForm');
+  }
   return (
     <div className='hero-container'>
           <video src={vid1}
@@ -19,7 +22,7 @@ function HeroSection() {
         <p> What are you waiting for? SIGN IN and make a prediction now!</p>
         <div className='hero-btns'>
               <Button className='btns' buttonStyle='btn--outline'
-                  buttonSize='btn--large'>
+                  buttonSize='btn--large' onClick={handleMakePredictionClick}>
                   MAKE PREDICTION
               </Button> 
               <Button className='btns' buttonStyle='btn--primary'
