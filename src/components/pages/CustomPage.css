@@ -53,7 +53,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(90deg,rgb(133, 7, 7) 0%, rgb(210, 0, 0) 100%);
+    background: linear-gradient(90deg, rgba(133, 7, 7, 0) 0%, rgba(210, 0, 0, 0) 100%);
+
   }
   
   

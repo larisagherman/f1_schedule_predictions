@@ -62,6 +62,17 @@ function Navbar() {
             navigate('/');
         }
     };
+    const handleViewRaceScheduleClick = () => {
+        navigate('/ViewRaceSchedule');
+    };
+    const handleMakePredictionClick = () => {
+        if (isSignedIn) {
+        navigate('/MakePrediction');
+        }
+        else {
+            navigate('/');
+        }
+    };
 
     window.addEventListener('resize', showButton);
 
@@ -72,7 +83,7 @@ function Navbar() {
                     <div className='navbar-logo'>
                         <span   className='nav-links'
                                 onClick={() => { closeMobileMenu(); handlePitStopClick(); }}>
-                            PIT STOP <i className='fab fa-bars' />
+                            PIT STOP 
                         </span>
                     </div>
                     <div className='menu-icon' onClick={handleClick}>
@@ -88,14 +99,20 @@ function Navbar() {
                             </span>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/make-prediction' className='nav-links' onClick={closeMobileMenu}>
+                            <span
+                                className='nav-links'
+                                onClick={() => { closeMobileMenu(); handleMakePredictionClick(); }}
+                            >
                                 Make Prediction
-                            </Link>
+                            </span>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/view-race-schedule' className='nav-links' onClick={closeMobileMenu}>
+                            <span
+                                className='nav-links'
+                                onClick={() => { closeMobileMenu(); handleViewRaceScheduleClick(); }}
+                            >
                                 View Race Schedule
-                            </Link>
+                            </span>
                         </li>
                         <li className='nav-item'>
                             <Link to='/about' className='nav-links' onClick={closeMobileMenu}>
@@ -113,7 +130,7 @@ function Navbar() {
                             </Button>
                         ) : (
                             <Link to="/SignInWithGoogle">
-                                <Button buttonStyle="btn--outline">
+                                <Button buttonStyle="btn--outline" linkTo="/SignInForm">
                                     SIGN IN
                                 </Button>
                             </Link>

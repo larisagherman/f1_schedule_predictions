@@ -18,7 +18,7 @@ const SignInWithGoogle = () => {
   }
   return (
     <div className='container'>
-            <div className='header'>
+            {/* <div className='header'>
                 <div className='text'>Sign In with Google</div>
                 <div className='inputs'>
                     <div className='input'>
@@ -34,8 +34,8 @@ const SignInWithGoogle = () => {
                         <input type="password" placeholder='Password'/>
                     </div>
                 </div>
-            </div>
-            <div className="forgot-password">Forgot Password? <span>Click here!</span></div>
+            </div> */}
+            {/* <div className="forgot-password">Forgot Password? <span>Click here!</span></div> */}
             <div className="submit-container">
               <button onClick={handleGoogle}  className="submit">
                 Sign In with Google

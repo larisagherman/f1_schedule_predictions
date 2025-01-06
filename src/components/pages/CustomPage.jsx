@@ -25,13 +25,13 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <div className="profile-greeting">
+      {/* <div className="profile-greeting">
         {user ? (
           <h2>Welcome back to the Pit Stop, {user.displayName}!</h2>  // Show the user's name if signed in
         ) : (
           <h2>Loading...</h2>  // Show loading while checking auth state
         )}
-          </div>
+          </div> */}
           <HeroSectionCustom />
 
       <Footer />
