@@ -128,6 +128,14 @@ const ViewRaceSchedule = () => {
     setEditingRace(null);
   };
 
+  const handleChange = (e, field) => {
+    const { value } = e.target;
+    setEditingRace((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   return (
     <div className="schedule-page">
       <header className="schedule-header">
