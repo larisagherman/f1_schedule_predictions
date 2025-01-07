@@ -1,66 +1,147 @@
 .schedule-page {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;
-  }
-  
-  .schedule-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.schedule-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.schedule-title {
+  font-size: 3rem;
+  color: #d32f2f;
+  margin-bottom: 10px;
+}
+
+.schedule-subtitle {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.schedule-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.schedule-table th {
+  background-color: #f8f8f8;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.schedule-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+.schedule-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.add-race-form {
+  margin-bottom: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.add-race-form h2 {
+  font-size: 1.8rem;
+  color: #d32f2f;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-race-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.add-race-fields input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.add-race-fields input::placeholder {
+  color: #aaa;
+}
+
+.add-race-fields button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #d32f2f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-race-fields button:hover {
+  background-color: #c62828;
+}
+
+@media (max-width: 768px) {
   .schedule-title {
-    font-size: 3rem;
-    color: #d32f2f;
-    margin-bottom: 10px;
-  }
-  
-  .schedule-subtitle {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .schedule-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 40px;
-  }
-  
-  .schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .schedule-table th {
-    background-color: #f8f8f8;
-    padding: 12px;
-    text-align: left;
-    font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #ddd;
-  }
-  
-  .schedule-table td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    color: #555;
-  }
-  
-  .schedule-table tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  @media (max-width: 768px) {
-    .schedule-title {
       font-size: 2rem;
-    }
-    
-    .schedule-table {
-      font-size: 0.9rem;
-    }
   }
+
+  .schedule-table {
+      font-size: 0.9rem;
+  }
+
+  .add-race-fields {
+      flex-direction: column;
+  }
+
+  .add-race-fields input {
+      width: 100%;
+  }
+
+  .add-race-fields button {
+      width: 100%;
+  }
+}
+.schedule-table select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+.schedule-table select:focus {
+  outline: none;
+  border-color: #d32f2f;
+}
+
+.add-race-fields select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #fff;
+}
