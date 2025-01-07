@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, get } from "firebase/database";
 import { getAuth } from "firebase/auth"; // Importing Firebase Auth
 import "./MakePrediction.css";
 
@@ -114,15 +114,44 @@ const MakePrediction = () => {
     alert("Your predictions have been saved, and your score has been updated!");
   };
 
-  const handleStartStop = () => {
+  const handleStartStop = async () => {
+    const racesRef = ref(database, "races");
+  
     if (buttonText === "Start") {
       setButtonText("Stop");
       setIsEditable(true); // Allow prediction editing when 'Start' is clicked
+  
+      // Update the 'canPredict' value to 1 for all races
+      const racesSnapshot = await get(racesRef);
+      const racesData = racesSnapshot.val();
+      if (racesData) {
+        Object.keys(racesData).forEach((roundKey) => {
+          const raceRef = ref(database, `races/${roundKey}`);
+          set(raceRef, {
+            ...racesData[roundKey],
+            canPredict: 1, // Enable predictions
+          });
+        });
+      }
     } else {
       setButtonText("Start");
       setIsEditable(false); // Prevent further editing when 'Stop' is clicked
+  
+      // Update the 'canPredict' value to 0 for all races
+      const racesSnapshot = await get(racesRef);
+      const racesData = racesSnapshot.val();
+      if (racesData) {
+        Object.keys(racesData).forEach((roundKey) => {
+          const raceRef = ref(database, `races/${roundKey}`);
+          set(raceRef, {
+            ...racesData[roundKey],
+            canPredict: 0, // Disable predictions
+          });
+        });
+      }
     }
   };
+  
 
   const drivers = [
     'Max Verstappen', 'Sergio Perez', 'Lewis Hamilton', 'George Russell', 'Charles Leclerc',
@@ -150,7 +179,7 @@ const MakePrediction = () => {
                 <th>1st Place</th>
                 <th>2nd Place</th>
                 <th>3rd Place</th>
-                <th>Status</th> {/* Add a new column for the "Race Ended" status */}
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -165,7 +194,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.first || ""}
                       onChange={(e) => handlePredictionChange(race.round, "first", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable || race.isEnded === 1} // Disable if race is ended
+                      disabled={!isEditable || race.canPredict === 0 || race.isEnded === 1}
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -178,7 +207,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.second || ""}
                       onChange={(e) => handlePredictionChange(race.round, "second", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable || race.isEnded === 1} // Disable if race is ended
+                      disabled={!isEditable || race.canPredict === 0 || race.isEnded === 1}
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -191,7 +220,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.third || ""}
                       onChange={(e) => handlePredictionChange(race.round, "third", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable || race.isEnded === 1} // Disable if race is ended
+                      disabled={!isEditable || race.canPredict === 0 || race.isEnded === 1}
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -199,7 +228,6 @@ const MakePrediction = () => {
                       ))}
                     </select>
                   </td>
-                  {/* Display "Race Ended" if the race has ended */}
                   {race.isEnded === 1 && <td className="ended-text">Race Ended</td>}
                 </tr>
               ))}
@@ -221,7 +249,6 @@ const MakePrediction = () => {
         <h2>Your Current Score: {userScore}</h2>
       </div>
 
-      {/* Displaying the saved predictions */}
       <div className="saved-predictions">
         <h3>Saved Predictions:</h3>
         {Object.keys(savedPredictions).length > 0 ? (
