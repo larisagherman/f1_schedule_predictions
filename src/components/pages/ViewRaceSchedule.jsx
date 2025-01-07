@@ -39,6 +39,9 @@ const ViewRaceSchedule = () => {
       if (user && user.email === 'amihut12@gmail.com') {
         setIsAdmin(true);
       }
+      if (user && user.email === 'gherman.larisa3@gmail.com') {
+        setIsAdmin(true);
+      }
     });
 
     const racesRef = ref(database, 'races');
