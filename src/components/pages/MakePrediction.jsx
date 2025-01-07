@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, get } from "firebase/database";
-import { getAuth } from "firebase/auth"; // Importing Firebase Auth
+import { getAuth } from "firebase/auth";
 import "./MakePrediction.css";
 
+const drivers = [
+  "Max Verstappen", "Sergio Perez", "Lewis Hamilton", "George Russell", "Charles Leclerc",
+  "Carlos Sainz", "Lando Norris", "Oscar Piastri", "Fernando Alonso", "Lance Stroll",
+  "Valtteri Bottas", "Zhou Guanyu", "Esteban Ocon", "Pierre Gasly", "Yuki Tsunoda",
+  "Liam Lawson", "Nico Hulkenberg", "Kevin Magnussen", "Alex Albon", "Logan Sargeant"
+];
+
+
 const MakePrediction = () => {
-  const [races, setRaces] = useState([]); // Stores the list of races
-  const [predictions, setPredictions] = useState({}); // Stores the user's predictions
-  const [userScore, setUserScore] = useState(0); // Stores the user's score
-  const [actualResults, setActualResults] = useState({}); // Stores the actual race results
-  const [savedPredictions, setSavedPredictions] = useState({}); // Stores the saved predictions for the user
-  const [isEditable, setIsEditable] = useState(false); // Tracks whether predictions are editable
-  const [buttonText, setButtonText] = useState("Start"); // Tracks button text
+  const [races, setRaces] = useState([]);
+  const [predictions, setPredictions] = useState({});
+  const [userScore, setUserScore] = useState(0);
+  const [savedPredictions, setSavedPredictions] = useState({});
   const database = getDatabase();
-  const auth = getAuth(); // Firebase Authentication instance
-
-  // List of admin UIDs
+  const auth = getAuth();
   const admins = ["eUKYeCJeKUdYMyjKFwHrZ3dBSuO2", "KYm3JGra3pbqWnEepORueDnxzpU2"]; // Replace with actual admin UIDs
-
-  // Check if the current user is an admin
   const isAdmin = auth.currentUser && admins.includes(auth.currentUser.uid);
+  const [buttonText, setButtonText] = useState("Start"); // Tracks whether the button says 'Start' or 'Stop'
 
-  // Fetch race data from Firebase
+
+  // Fetch race data and update races
   useEffect(() => {
     const racesRef = ref(database, "races");
     onValue(racesRef, (snapshot) => {
@@ -44,7 +47,7 @@ const MakePrediction = () => {
     });
   }, [database, auth.currentUser]);
 
-  // Fetch the user's previously saved predictions
+  // Fetch the user's saved predictions
   useEffect(() => {
     const predictionsRef = ref(database, `users/${auth.currentUser.uid}/predictions`);
     onValue(predictionsRef, (snapshot) => {
@@ -54,19 +57,11 @@ const MakePrediction = () => {
         setPredictions(savedPreds); // Pre-fill the predictions state with saved data
       }
     });
-
-    // Fetch actual results for each race (this should come from the backend or some API)
-    const actualResultsRef = ref(database, "races");
-    onValue(actualResultsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        setActualResults(data);
-      }
-    });
   }, [database, auth.currentUser]);
 
   const handlePredictionChange = (round, position, driver) => {
-    if (isEditable) { // Only allow changes if editable
+    const race = races.find((r) => r.round === round);
+    if (race?.canPredict === 1) {
       setPredictions((prev) => ({
         ...prev,
         [round]: {
@@ -78,93 +73,33 @@ const MakePrediction = () => {
   };
 
   const handleSave = async () => {
-    const userId = auth.currentUser.uid; // Get the current logged-in user ID
-
-    // Save the predictions under the current user's node
+    const userId = auth.currentUser.uid;
     const predictionsRef = ref(database, `users/${userId}/predictions`);
     await set(predictionsRef, predictions);
-
-    // Calculate and update the score
-    let score = 0;
-
-    // Iterate over races and compare predictions with actual results
-    Object.keys(predictions).forEach((round) => {
-      const userPrediction = predictions[round];
-      const result = "round" + round;  // Corrected for actual race result
-      const actualResult = actualResults[result];
-      
-      if (actualResult) {
-        // Compare and increment score for correct predictions
-        if (userPrediction.first === actualResult.winner) score++;
-        if (userPrediction.second === actualResult.second) score++;
-        if (userPrediction.third === actualResult.third) score++;
-      }
-    });
-
-    // Save the updated score to the database
-    const scoreRef = ref(database, `users/${userId}/score`);
-    await set(scoreRef, score);
-
-    // Update the local score state
-    setUserScore(score);
-
-    // Also update the saved predictions state
-    setSavedPredictions(predictions);
-
-    alert("Your predictions have been saved, and your score has been updated!");
+    alert("Your predictions have been saved!");
   };
 
   const handleStartStop = async () => {
     const racesRef = ref(database, "races");
-  
-    if (buttonText === "Start") {
-      setButtonText("Stop");
-      setIsEditable(true); // Allow prediction editing when 'Start' is clicked
-  
-      // Update the 'canPredict' value to 1 for all races
-      const racesSnapshot = await get(racesRef);
-      const racesData = racesSnapshot.val();
-      if (racesData) {
-        Object.keys(racesData).forEach((roundKey) => {
-          const raceRef = ref(database, `races/${roundKey}`);
-          set(raceRef, {
-            ...racesData[roundKey],
-            canPredict: 1, // Enable predictions
-          });
+    const racesSnapshot = await get(racesRef);
+    const racesData = racesSnapshot.val();
+    if (racesData) {
+      Object.keys(racesData).forEach((roundKey) => {
+        const raceRef = ref(database, `races/${roundKey}`);
+        set(raceRef, {
+          ...racesData[roundKey],
+          canPredict: buttonText === "Start" ? 1 : 0,
         });
-      }
-    } else {
-      setButtonText("Start");
-      setIsEditable(false); // Prevent further editing when 'Stop' is clicked
-  
-      // Update the 'canPredict' value to 0 for all races
-      const racesSnapshot = await get(racesRef);
-      const racesData = racesSnapshot.val();
-      if (racesData) {
-        Object.keys(racesData).forEach((roundKey) => {
-          const raceRef = ref(database, `races/${roundKey}`);
-          set(raceRef, {
-            ...racesData[roundKey],
-            canPredict: 0, // Disable predictions
-          });
-        });
-      }
+      });
     }
+    setButtonText(buttonText === "Start" ? "Stop" : "Start");
   };
-  
-
-  const drivers = [
-    'Max Verstappen', 'Sergio Perez', 'Lewis Hamilton', 'George Russell', 'Charles Leclerc',
-    'Carlos Sainz', 'Lando Norris', 'Oscar Piastri', 'Fernando Alonso', 'Lance Stroll',
-    'Valtteri Bottas', 'Zhou Guany', 'Esteban Ocon', 'Pierre Gasly', 'Yuki Tsunoda',
-    'Liam Lawson', 'Nico Hulkenberg', 'Kevin Magnussen', 'Alex Albon', 'Logan Sargeant'
-  ];
 
   return (
     <div className="prediction-page">
       <header className="prediction-header">
         <h1 className="prediction-title">Make Your Predictions</h1>
-        <p className="prediction-subtitle">Select the top 3 drivers for each race in the 2024 F1 season</p>
+        <p className="prediction-subtitle">Select the top 3 drivers for each race</p>
       </header>
 
       <div className="prediction-card">
@@ -179,7 +114,6 @@ const MakePrediction = () => {
                 <th>1st Place</th>
                 <th>2nd Place</th>
                 <th>3rd Place</th>
-                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -194,11 +128,15 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.first || ""}
                       onChange={(e) => handlePredictionChange(race.round, "first", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable || race.canPredict === 0 || race.isEnded === 1}
+                      disabled={race.canPredict !== 1}
                     >
-                      <option value="" disabled>Select a driver</option>
+                      <option value="" disabled>
+                        Select a driver
+                      </option>
                       {drivers.map((driver) => (
-                        <option key={driver} value={driver}>{driver}</option>
+                        <option key={driver} value={driver}>
+                          {driver}
+                        </option>
                       ))}
                     </select>
                   </td>
@@ -207,11 +145,15 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.second || ""}
                       onChange={(e) => handlePredictionChange(race.round, "second", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable || race.canPredict === 0 || race.isEnded === 1}
+                      disabled={race.canPredict !== 1}
                     >
-                      <option value="" disabled>Select a driver</option>
+                      <option value="" disabled>
+                        Select a driver
+                      </option>
                       {drivers.map((driver) => (
-                        <option key={driver} value={driver}>{driver}</option>
+                        <option key={driver} value={driver}>
+                          {driver}
+                        </option>
                       ))}
                     </select>
                   </td>
@@ -220,15 +162,18 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.third || ""}
                       onChange={(e) => handlePredictionChange(race.round, "third", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable || race.canPredict === 0 || race.isEnded === 1}
+                      disabled={race.canPredict !== 1}
                     >
-                      <option value="" disabled>Select a driver</option>
+                      <option value="" disabled>
+                        Select a driver
+                      </option>
                       {drivers.map((driver) => (
-                        <option key={driver} value={driver}>{driver}</option>
+                        <option key={driver} value={driver}>
+                          {driver}
+                        </option>
                       ))}
                     </select>
                   </td>
-                  {race.isEnded === 1 && <td className="ended-text">Race Ended</td>}
                 </tr>
               ))}
             </tbody>
@@ -242,29 +187,13 @@ const MakePrediction = () => {
             {buttonText}
           </button>
         )}
-        <button onClick={handleSave} className="save-button">Save Predictions</button>
+        <button onClick={handleSave} className="save-button">
+          Save Predictions
+        </button>
       </div>
 
       <div className="score-container">
         <h2>Your Current Score: {userScore}</h2>
-      </div>
-
-      <div className="saved-predictions">
-        <h3>Saved Predictions:</h3>
-        {Object.keys(savedPredictions).length > 0 ? (
-          <ul>
-            {races.map((race) => (
-              <li key={race.round}>
-                <strong>Round {race.round}:</strong> 
-                1st: {savedPredictions[race.round]?.first || "N/A"}, 
-                2nd: {savedPredictions[race.round]?.second || "N/A"}, 
-                3rd: {savedPredictions[race.round]?.third || "N/A"}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No predictions saved yet.</p>
-        )}
       </div>
     </div>
   );
