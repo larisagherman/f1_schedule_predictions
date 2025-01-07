@@ -95,7 +95,7 @@ const ViewRaceSchedule = () => {
       return;
     }
 
-    await set(raceRef, newRace);
+    await set(raceRef, { ...newRace, isEnded: 0 }); // Set isEnded to 0 initially
     setNewRace({
       round: '',
       date: '',
@@ -118,11 +118,14 @@ const ViewRaceSchedule = () => {
     }
   };
 
-  const handleChange = (e, field) => {
-    setEditingRace({
-      ...editingRace,
-      [field]: e.target.value,
-    });
+  const handleEndRace = async (race) => {
+    // Update the isEnded field in the database
+    await set(ref(database, `races/round${race.round}/isEnded`), 1);
+    alert(`Race Round ${race.round} has been ended!`);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingRace(null);
   };
 
   return (
@@ -247,7 +250,7 @@ const ViewRaceSchedule = () => {
                       </td>
                       <td>
                         <button onClick={handleSave}>Save</button>
-                        <button onClick={() => setEditingRace(null)}>Cancel</button>
+                        <button onClick={handleCancelEdit}>Cancel</button>
                       </td>
                     </>
                   ) : (
@@ -262,6 +265,9 @@ const ViewRaceSchedule = () => {
                       {isAdmin && (
                         <td>
                           <button onClick={() => handleEdit(race)}>Edit</button>
+                          <button onClick={() => handleEndRace(race)} disabled={race.isEnded === 1}>
+                            End
+                          </button>
                         </td>
                       )}
                     </>
