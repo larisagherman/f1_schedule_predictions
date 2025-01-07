@@ -20,26 +20,32 @@ const ViewRaceSchedule = () => {
   const [editingRace, setEditingRace] = useState(null);
   const [drivers, setDrivers] = useState([
     'Max Verstappen',
-    'Lewis Hamilton',
-    'Fernando Alonso',
-    'Charles Leclerc',
     'Sergio Perez',
+    'Lewis Hamilton',
+    'George Russell',
+    'Charles Leclerc',
     'Carlos Sainz',
     'Lando Norris',
-    'George Russell',
+    'Oscar Piastri',
+    'Fernando Alonso',
+    'Lance Stroll',
     'Valtteri Bottas',
+    'Zhou Guany',
     'Esteban Ocon',
-    // Add more 2024 F1 drivers here...
+    'Pierre Gasly',
+    'Yuki Tsunoda',
+    'Liam Lawson',
+    'Nico Hulkenberg',
+    'Kevin Magnussen',
+    'Alex Albon',
+    'Logan Sargeant',
   ]);
 
   const database = getDatabase(app);
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user && user.email === 'amihut12@gmail.com') {
-        setIsAdmin(true);
-      }
-      if (user && user.email === 'gherman.larisa3@gmail.com') {
+      if (user && ['amihut12@gmail.com', 'gherman.larisa3@gmail.com'].includes(user.email)) {
         setIsAdmin(true);
       }
     });
