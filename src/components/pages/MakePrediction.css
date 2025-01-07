@@ -144,3 +144,34 @@
 .saved-predictions li strong {
   color: #d32f2f;
 }
+
+.start-stop-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+.start-stop-button:hover {
+  background-color: #388e3c;
+}
+
+.start-stop-button:focus {
+  outline: none;
+}
+
+.start-stop-button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
