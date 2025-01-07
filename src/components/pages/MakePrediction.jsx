@@ -9,8 +9,16 @@ const MakePrediction = () => {
   const [userScore, setUserScore] = useState(0); // Stores the user's score
   const [actualResults, setActualResults] = useState({}); // Stores the actual race results
   const [savedPredictions, setSavedPredictions] = useState({}); // Stores the saved predictions for the user
+  const [isEditable, setIsEditable] = useState(false); // Tracks whether predictions are editable
+  const [buttonText, setButtonText] = useState("Start"); // Tracks button text
   const database = getDatabase();
   const auth = getAuth(); // Firebase Authentication instance
+
+  // List of admin UIDs
+  const admins = ["eUKYeCJeKUdYMyjKFwHrZ3dBSuO2", "KYm3JGra3pbqWnEepORueDnxzpU2"]; // Replace with actual admin UIDs
+
+  // Check if the current user is an admin
+  const isAdmin = auth.currentUser && admins.includes(auth.currentUser.uid);
 
   // Fetch race data from Firebase
   useEffect(() => {
@@ -58,13 +66,15 @@ const MakePrediction = () => {
   }, [database, auth.currentUser]);
 
   const handlePredictionChange = (round, position, driver) => {
-    setPredictions((prev) => ({
-      ...prev,
-      [round]: {
-        ...prev[round],
-        [position]: driver,
-      },
-    }));
+    if (isEditable) { // Only allow changes if editable
+      setPredictions((prev) => ({
+        ...prev,
+        [round]: {
+          ...prev[round],
+          [position]: driver,
+        },
+      }));
+    }
   };
 
   const handleSave = async () => {
@@ -80,13 +90,11 @@ const MakePrediction = () => {
     // Iterate over races and compare predictions with actual results
     Object.keys(predictions).forEach((round) => {
       const userPrediction = predictions[round];
-      const result = "round"+round;                   //NU AM NICIO IDEE CE II AICI
+      const result = "round"+round;  // Corrected for actual race result
       const actualResult = actualResults[result];
-      console.log(predictions[round]);
-
+      
       if (actualResult) {
         // Compare and increment score for correct predictions
-        console.log("randomvbulasutfo");
         if (userPrediction.first === actualResult.winner) score++;
         if (userPrediction.second === actualResult.second) score++;
         if (userPrediction.third === actualResult.third) score++;
@@ -106,27 +114,21 @@ const MakePrediction = () => {
     alert("Your predictions have been saved, and your score has been updated!");
   };
 
+  const handleStartStop = () => {
+    if (buttonText === "Start") {
+      setButtonText("Stop");
+      setIsEditable(true); // Allow prediction editing when 'Start' is clicked
+    } else {
+      setButtonText("Start");
+      setIsEditable(false); // Prevent further editing when 'Stop' is clicked
+    }
+  };
+
   const drivers = [
-    'Max Verstappen',
-    'Sergio Perez',
-    'Lewis Hamilton',
-    'George Russell',
-    'Charles Leclerc',
-    'Carlos Sainz',
-    'Lando Norris',
-    'Oscar Piastri',
-    'Fernando Alonso',
-    'Lance Stroll',
-    'Valtteri Bottas',
-    'Zhou Guany',
-    'Esteban Ocon',
-    'Pierre Gasly',
-    'Yuki Tsunoda',
-    'Liam Lawson',
-    'Nico Hulkenberg',
-    'Kevin Magnussen',
-    'Alex Albon',
-    'Logan Sargeant'
+    'Max Verstappen', 'Sergio Perez', 'Lewis Hamilton', 'George Russell', 'Charles Leclerc',
+    'Carlos Sainz', 'Lando Norris', 'Oscar Piastri', 'Fernando Alonso', 'Lance Stroll',
+    'Valtteri Bottas', 'Zhou Guany', 'Esteban Ocon', 'Pierre Gasly', 'Yuki Tsunoda',
+    'Liam Lawson', 'Nico Hulkenberg', 'Kevin Magnussen', 'Alex Albon', 'Logan Sargeant'
   ];
 
   return (
@@ -162,6 +164,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.first || ""}
                       onChange={(e) => handlePredictionChange(race.round, "first", e.target.value)}
                       className="driver-select"
+                      disabled={!isEditable}
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -174,6 +177,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.second || ""}
                       onChange={(e) => handlePredictionChange(race.round, "second", e.target.value)}
                       className="driver-select"
+                      disabled={!isEditable}
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -186,6 +190,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.third || ""}
                       onChange={(e) => handlePredictionChange(race.round, "third", e.target.value)}
                       className="driver-select"
+                      disabled={!isEditable}
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -200,7 +205,12 @@ const MakePrediction = () => {
         </div>
       </div>
 
-      <div className="save-button-container">
+      <div className="button-container">
+        {isAdmin && (
+          <button onClick={handleStartStop} className="start-stop-button">
+            {buttonText}
+          </button>
+        )}
         <button onClick={handleSave} className="save-button">Save Predictions</button>
       </div>
 
