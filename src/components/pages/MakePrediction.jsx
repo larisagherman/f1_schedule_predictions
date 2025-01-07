@@ -11,6 +11,7 @@ const MakePrediction = () => {
   const [savedPredictions, setSavedPredictions] = useState({}); // Stores the saved predictions for the user
   const [isEditable, setIsEditable] = useState(false); // Tracks whether predictions are editable
   const [buttonText, setButtonText] = useState("Start"); // Tracks button text
+  const [raceEnded, setRaceEnded] = useState({}); // Tracks if a race has ended
   const database = getDatabase();
   const auth = getAuth(); // Firebase Authentication instance
 
@@ -66,7 +67,7 @@ const MakePrediction = () => {
   }, [database, auth.currentUser]);
 
   const handlePredictionChange = (round, position, driver) => {
-    if (isEditable) { // Only allow changes if editable
+    if (isEditable && !raceEnded[round]) { // Allow changes if editable and race is not ended
       setPredictions((prev) => ({
         ...prev,
         [round]: {
@@ -124,6 +125,13 @@ const MakePrediction = () => {
     }
   };
 
+  const handleEnd = (round) => {
+    setRaceEnded((prev) => ({
+      ...prev,
+      [round]: true, // Mark the race as ended
+    }));
+  };
+
   const drivers = [
     'Max Verstappen', 'Sergio Perez', 'Lewis Hamilton', 'George Russell', 'Charles Leclerc',
     'Carlos Sainz', 'Lando Norris', 'Oscar Piastri', 'Fernando Alonso', 'Lance Stroll',
@@ -150,6 +158,7 @@ const MakePrediction = () => {
                 <th>1st Place</th>
                 <th>2nd Place</th>
                 <th>3rd Place</th>
+                <th>End Race</th> {/* New column for ending race */}
               </tr>
             </thead>
             <tbody>
@@ -164,7 +173,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.first || ""}
                       onChange={(e) => handlePredictionChange(race.round, "first", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable}
+                      disabled={!isEditable || raceEnded[race.round]} // Disable if ended
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -177,7 +186,7 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.second || ""}
                       onChange={(e) => handlePredictionChange(race.round, "second", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable}
+                      disabled={!isEditable || raceEnded[race.round]} // Disable if ended
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
@@ -190,13 +199,18 @@ const MakePrediction = () => {
                       value={predictions[race.round]?.third || ""}
                       onChange={(e) => handlePredictionChange(race.round, "third", e.target.value)}
                       className="driver-select"
-                      disabled={!isEditable}
+                      disabled={!isEditable || raceEnded[race.round]} // Disable if ended
                     >
                       <option value="" disabled>Select a driver</option>
                       {drivers.map((driver) => (
                         <option key={driver} value={driver}>{driver}</option>
                       ))}
                     </select>
+                  </td>
+                  <td>
+                    {isAdmin && !raceEnded[race.round] && ( // Only admins and race not ended
+                      <button onClick={() => handleEnd(race.round)} className="end-button">End</button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -218,7 +232,6 @@ const MakePrediction = () => {
         <h2>Your Current Score: {userScore}</h2>
       </div>
 
-      {/* Displaying the saved predictions */}
       <div className="saved-predictions">
         <h3>Saved Predictions:</h3>
         {Object.keys(savedPredictions).length > 0 ? (
