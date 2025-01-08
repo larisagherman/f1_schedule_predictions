@@ -8,8 +8,9 @@ import CustomPage from './components/pages/CustomPage.jsx';
 import HomeCustom from './components/pages/HomeCustom.jsx';
 import About from './components/pages/About.jsx';
 import ViewRaceSchedule from './components/pages/ViewRaceSchedule.jsx';
-import RacePrediction from './components/pages/MakePrediction.jsx';
+//import RacePrediction from './components/pages/MakePrediction.jsx';
 import MakePrediction from './components/pages/MakePrediction.jsx';
+import LeaderBoard from './components/pages/LeaderBoard.jsx';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/ViewRaceSchedule" element={<ViewRaceSchedule />} />
         <Route path="/MakePrediction" element={<MakePrediction />} />
+        <Route path="/LeaderBoard" element={<LeaderBoard />} />
       </Routes>
     </BrowserRouter>
  
