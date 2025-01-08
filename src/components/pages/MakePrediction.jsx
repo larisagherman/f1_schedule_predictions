@@ -87,6 +87,20 @@ const MakePrediction = () => {
         }
     };
 
+    const preventRefresh = (e) => {
+      const message = "Data will get lost";
+      e.returnValue = message; // Standard way to set the message
+      return message; // Some browsers might still require this line
+    };
+
+    useEffect(() => {
+      window.addEventListener('beforeunload', preventRefresh);
+  
+      return () => {
+        window.removeEventListener('beforeunload', preventRefresh);
+      };
+    }, []);
+
     useEffect(() => {
         const racesRef = ref(database, "races");
         const unsubscribeRaces = onValue(racesRef, (snapshot) => {
