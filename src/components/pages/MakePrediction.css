@@ -141,3 +141,23 @@
 .saved-predictions li strong {
   color: #333;
 }
+
+.driver-photo {
+  margin-top: 20px;
+  width: 500px;
+  text-align: center;
+}
+
+.driver-photo img {
+  width: 10px; 
+  height: auto;
+  border-radius: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  display: inline-block;
+}
+
+.driver-photo h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333; 
+}
