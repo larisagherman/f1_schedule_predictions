@@ -1,31 +1,39 @@
+/* General Styling */
 .leaderboard-page {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
   .leaderboard-header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
   
   .leaderboard-title {
-    font-size: 2.5rem;
-    color: #c00;
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
   }
   
   .leaderboard-subtitle {
-    font-size: 1.2rem;
-    color: #333;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .uid-text {
+    font-size: 18px;
+    color: #007bff; /* Blue color for UID */
     margin-top: 10px;
   }
   
   .leaderboard-section {
-    margin: 40px 0;
+    margin-top: 40px;
   }
   
   .section-title {
-    font-size: 2rem;
+    font-size: 24px;
     color: #333;
     margin-bottom: 20px;
   }
@@ -33,21 +41,16 @@
   .leaderboard-container {
     display: flex;
     flex-direction: column;
-    width: 80%;
-    margin: 0 auto;
+    gap: 10px;
   }
   
   .leaderboard-row {
     display: flex;
     justify-content: space-between;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .leaderboard-item {
-    width: 30%;
-    text-align: center;
-    font-size: 1.2rem;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .leaderboard-row.header {
@@ -56,30 +59,37 @@
     color: white;
   }
   
-  .leaderboard-row:nth-child(even) {
-    background-color: #f9f9f9;
+  .leaderboard-row.highlight {
+    background-color: #ffeb3b; /* Yellow highlight color for the logged-in user's row */
+    color: #000; /* Change text color to black for better contrast */
+    border: 2px solid #ff9800; /* Optional: border for better highlight effect */
   }
   
-  .leaderboard-row:hover {
-    background-color: #c00;
-  }
-  
-  .rank {
-    width: 10%;
-  }
-  
-  .username {
-    width: 50%;
-  }
-  
-  .score {
+  .leaderboard-item {
     width: 30%;
+    text-align: center;
   }
   
-  .footer {
-    text-align: center;
-    margin-top: 40px;
+  .leaderboard-item.rank {
+    font-size: 18px;
+  }
+  
+  .leaderboard-item.username {
+    font-size: 18px;
     color: #333;
-    font-size: 1rem;
+  }
+  
+  .leaderboard-item.score {
+    font-size: 18px;
+    color: #28a745; /* Green color for score */
+  }
+  
+  /* Loading/Error States */
+  .loading,
+  .error {
+    text-align: center;
+    font-size: 18px;
+    color: #ff5733; /* Red color for errors */
+    margin-top: 20px;
   }
   
