@@ -1,0 +1,85 @@
+.leaderboard-page {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  .leaderboard-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .leaderboard-title {
+    font-size: 2.5rem;
+    color: #c00;
+  }
+  
+  .leaderboard-subtitle {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .leaderboard-section {
+    margin: 40px 0;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .leaderboard-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .leaderboard-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .leaderboard-item {
+    width: 30%;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .leaderboard-row.header {
+    font-weight: bold;
+    background-color: #c00;
+    color: white;
+  }
+  
+  .leaderboard-row:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .leaderboard-row:hover {
+    background-color: #c00;
+  }
+  
+  .rank {
+    width: 10%;
+  }
+  
+  .username {
+    width: 50%;
+  }
+  
+  .score {
+    width: 30%;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #333;
+    font-size: 1rem;
+  }
+  

@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getDatabase, ref, get } from "firebase/database"; // Import Realtime Database functions
+
 const firebaseConfig = {
   apiKey: "AIzaSyD8kUf0cYpNhwGxg9k48Up84puzi7sqxus",
   authDomain: "f1-schedule-predictions-6b3b8.firebaseapp.com",
@@ -11,5 +13,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const database = getDatabase(app); // Initialize Realtime Database
+
+export { auth, database, ref, get }; // Export Realtime Database functions
 export default app;

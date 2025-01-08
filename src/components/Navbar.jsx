@@ -65,9 +65,12 @@ function Navbar() {
     const handleViewRaceScheduleClick = () => {
         navigate('/ViewRaceSchedule');
     };
+    const handleLeadearBoardClick = () => {
+        navigate('/Leaderboard');
+    };
     const handleMakePredictionClick = () => {
         if (isSignedIn) {
-        navigate('/MakePrediction');
+            navigate('/MakePrediction');
         }
         else {
             navigate('/');
@@ -81,8 +84,8 @@ function Navbar() {
             <nav className='navbar'>
                 <div className='navbar-container'>
                     <div className='navbar-logo'>
-                        <span   className='nav-links'
-                                onClick={() => { closeMobileMenu(); handlePitStopClick(); }}>
+                        <span className='nav-links'
+                            onClick={() => { closeMobileMenu(); handlePitStopClick(); }}>
                             PIT STOP 
                         </span>
                     </div>
@@ -117,6 +120,14 @@ function Navbar() {
                         <li className='nav-item'>
                             <Link to='/about' className='nav-links' onClick={closeMobileMenu}>
                                 About
+                            </Link>
+                        </li>
+                        <li className='nav-item'>
+                            <Link to='/LeaderBoard'
+                                className='nav-links'
+                                onClick={() => { closeMobileMenu();}}
+                            >
+                                Leaderboard
                             </Link>
                         </li>
                     </ul>
