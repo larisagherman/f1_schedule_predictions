@@ -165,3 +165,31 @@
 .driver-photo-container {
   text-align: center;
 }
+
+.prediction-history-container {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 2px solid #ccc;
+}
+
+.prediction-history-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.prediction-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.prediction-history-table th, 
+.prediction-history-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.prediction-history-table th {
+  background-color: #f4f4f4;
+}
