@@ -87,19 +87,19 @@ const MakePrediction = () => {
         }
     };
 
-    const preventRefresh = (e) => {
-      const message = "Data will get lost";
-      e.returnValue = message; // Standard way to set the message
-      return message; // Some browsers might still require this line
-    };
-
     useEffect(() => {
-      window.addEventListener('beforeunload', preventRefresh);
+      const handleBeforeUnload = (e) => {
+          e.preventDefault();  // Prevent the default action (refresh)
+          // Return nothing to avoid the popup
+      };
+  
+      window.addEventListener("beforeunload", handleBeforeUnload);
   
       return () => {
-        window.removeEventListener('beforeunload', preventRefresh);
+          window.removeEventListener("beforeunload", handleBeforeUnload);
       };
-    }, []);
+  }, []);
+  
 
     useEffect(() => {
         const racesRef = ref(database, "races");
@@ -327,6 +327,33 @@ const MakePrediction = () => {
                         />
                     </div>
                 )}
+            </div>
+            <div className="prediction-history-container">
+                <h2>Your Prediction History</h2>
+                {Object.keys(savedPredictions).length === 0 ? (
+                    <p>No predictions found. Make your first prediction!</p>
+                        ) : (
+                        <table className="prediction-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Round</th>
+                                    <th>1st Place</th>
+                                    <th>2nd Place</th>
+                                    <th>3rd Place</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.keys(savedPredictions).map((round) => (
+                                    <tr key={round}>
+                                        <td>{round}</td>
+                                        <td>{savedPredictions[round]?.first || "N/A"}</td>
+                                        <td>{savedPredictions[round]?.second || "N/A"}</td>
+                                        <td>{savedPredictions[round]?.third || "N/A"}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
             </div>
         </div>
     );
