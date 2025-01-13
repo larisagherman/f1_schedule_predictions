@@ -13,7 +13,7 @@ import About from './components/pages/About.jsx';
 import ViewRaceSchedule from './components/pages/ViewRaceSchedule.jsx';
 import MakePrediction from './components/pages/MakePrediction.jsx';
 import LeaderBoard from './components/pages/LeaderBoard.jsx';
-
+import ContactPage from './components/pages/ContactPage';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -53,6 +53,8 @@ function App() {
         <Route path="/ViewRaceSchedule" element={<ViewRaceSchedule />} />
         <Route path="/MakePrediction" element={<MakePrediction />} />
         <Route path="/LeaderBoard" element={<LeaderBoard />} />
+        <Route path="/ContactPage" element={<ContactPage />} />
+
       </Routes>
     </BrowserRouter>
   );

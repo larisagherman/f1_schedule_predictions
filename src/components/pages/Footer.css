@@ -1,15 +1,12 @@
 .footer-container {
-  background-color: rgb(133, 7, 7);
-  padding: 4rem 0 2rem 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Ensures the content is aligned to the top */
-  align-items: center;
-  width: 100%;
-  min-height: 100vh; /* Make sure the footer stretches to at least the height of the viewport */
-  box-sizing: border-box;
-}
-
+    background-color: rgb(133, 7, 7);
+    padding: 4rem 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
   .footer-subscription {
     display: flex;
     flex-direction: column;
@@ -30,6 +27,7 @@
   .footer-subscription-heading {
     margin-bottom: 24px;
     font-size: 24px;
+    
   }
   
   .footer-subscription-text {
