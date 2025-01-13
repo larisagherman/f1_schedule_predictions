@@ -45,11 +45,13 @@ function HeroSectionCustom() {
   return (
     <div className='hero-container'>
       <video src={vid1} autoPlay loop muted />
-      {user ? (
-        <h1>Welcome back to the Pit Stop, {user.displayName}</h1>
-      ) : (
-        <h1>Welcome back to the Pit Stop</h1> // Default text if no user is logged in
-      )}
+      <div class="welcome-message">
+        {user ? (
+          <h1>Welcome back to the Pit Stop, {user.displayName}</h1>
+        ) : (
+          <h1>Welcome back to the Pit Stop</h1> // Default text if no user is logged in
+        )}
+        </div>
       <div className='hero-btns'>
         <Button
           className='btns'

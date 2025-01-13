@@ -1,65 +1,83 @@
-import React from 'react'
+import React, { useState } from 'react';
 import './Footer.css';
 import { Button } from '../Button';
 import { Link } from 'react-router-dom';
-import { img1 } from '../../assets';
+import { database } from '../../firebase'; // Import the Firebase database
+import { ref, set } from 'firebase/database'; // Import the necessary Firebase functions
+
 function Footer() {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (email === '') {
+      setMessage('Please enter a valid email address');
+      return;
+    }
+
+    // Reference to store the email in Firebase
+    const emailRef = ref(database, 'subscribers/' + Date.now()); // Using timestamp as unique key
+
+    // Push the email into Firebase Realtime Database
+    set(emailRef, {
+      email: email,
+      timestamp: Date.now(),
+    })
+      .then(() => {
+        setEmail(''); // Clear the input field
+        setMessage('Thank you for subscribing!');
+      })
+      .catch((error) => {
+        console.error('Error subscribing:', error);
+        setMessage('There was an error subscribing. Please try again.');
+      });
+  };
+
   return (
-    <div className='footer-container'>
-          <section className='footer-subscribtion'>
-              <p className="footer-subscribtion-heading">
-              Join our newsletter for the latest race updates and predictions!              </p>
-              <div className='input-areas'>
-                  <form>
-                      <input type="email" name="email" placeholder='Your Email' className="footer-input" />
-                      <Button buttonStyle="btn--outline">Subscribe</Button>
-                  </form>
-              </div>
-          </section>
-          <div className="footer-links">
-            <div className="footer-link-items">
-              <h2>About Us</h2>
-              <Link to="/About">Terms of Service</Link>
-            </div>
-            <div className="footer-link-items">
-              <h2>Contact Us</h2>
-              <Link to="/ContactPage">Contact</Link>
-              <Link to="/support">Support</Link>
-            </div>
-            <div className="footer-link-items">
-              <h2>Social Media</h2>
-              <a href="https://www.instagram.com/f1/" target="_blank" rel="noopener noreferrer">Instagram</a>
-              <a href="https://web.facebook.com/Formula1/?_rdc=1&_rdr" target="_blank" rel="noopener noreferrer">Facebook</a>
-              <a href="https://www.youtube.com/channel/UCB_qr75-ydFVKSF9Dmo6izg" target="_blank" rel="noopener noreferrer">YouTube</a>
-            </div>
-          </div>
+    <div className="footer-container">
+      {/* Newsletter Subscription */}
+      <section className="footer-subscription">
+        <p className="footer-subscription-heading">
+          Join our newsletter for the latest race updates and predictions!
+        </p>
+        <div className="input-areas">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              className="footer-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} // Handle email input change
+              required
+            />
+            <Button buttonStyle="btn--outline">Subscribe</Button>
+          </form>
+          {/* Display success or error message */}
+          {message && <p>{message}</p>}
+        </div>
+      </section>
 
-          <section class='social-media'>
-        <div class='social-media-wrap'>
-          <div class='footer-logo'>
-            <Link to='/' className='social-logo'>
-            <i class="fa fa-flag-checkered"></i>
+      {/* Footer Links */}
+      <div className="footer-links">
+        <div className="footer-link-items">
+          <h2><Link to="/About">About Us</Link></h2>
+        </div>
+        <div className="footer-link-items">
+          <h2><Link to="/ContactPage">Contact Us</Link></h2>
+        </div>
+      </div>
 
-              {/* <img src={img1} alt='Logo' className='footer-logo-img'></img> */}
-            </Link>
-          </div>
-          <small class='website-rights'>F1 Predictions © 2024</small>
-          <div class='social-icons'>
-            <a href="https://web.facebook.com/Formula1/?_rdc=1&_rdr" target="_blank" rel="noopener noreferrer">
-              <i class='fab fa-facebook-f' />
-            </a>
-            <a href="https://www.instagram.com/f1/" target="_blank" rel="noopener noreferrer">
-
-              <i class='fab fa-instagram' />
-            </a>
-            <a href="https://www.youtube.com/channel/UCB_qr75-ydFVKSF9Dmo6izg" target="_blank" rel="noopener noreferrer">
-              <i class='fab fa-youtube' />
-            </a>
-          </div>
+      {/* Social Media Section */}
+      <section className="social-media">
+        <div className="social-media-wrap">
+          <small className="website-rights">F1 Predictions © 2024</small>
         </div>
       </section>
     </div>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

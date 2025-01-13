@@ -70,3 +70,17 @@ video {
       width: 100%;
     }
   }
+  .welcome-message {
+    font-family: 'Press Start 2P', cursive; /* Use a futuristic font */
+    font-size: 40px; /* Adjust font size */
+    color: #D50F25; /* Neon green, or any color you prefer */
+    text-shadow: 2px 2px 5px rgba(213, 15, 37, 0.7); /* Optional glowing effect */
+    letter-spacing: 1px; /* Add spacing for a more "robotic" feel */
+    line-height: 1.5; /* Space between lines for better readability */
+    margin-top: 20px; /* Adjust the position */
+    padding: 10px;
+    text-align: center; /* Center align the text */
+  }
+  
+  
+  
