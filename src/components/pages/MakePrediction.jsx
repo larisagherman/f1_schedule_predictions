@@ -71,8 +71,8 @@ const MakePrediction = () => {
         Object.keys(predictions).forEach(round => {
             const race = races.find(r => r.round === round);
             if (race) {
-                if (predictions[round]?.first === race.winner) score += 1;
-                if (predictions[round]?.second === race.second) score += 1;
+                if (predictions[round]?.first === race.winner) score += 3;
+                if (predictions[round]?.second === race.second) score += 2;
                 if (predictions[round]?.third === race.third) score += 1;
             }
         });
