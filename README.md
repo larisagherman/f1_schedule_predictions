@@ -1,5 +1,5 @@
 
-<a href="https://f1-schedule-predictions-6b3b8.firebaseapp.com" target="_blank"><h1 align="center">🏎️ Formula 1 Race Schedule & Predictions Web Application <h1/> </a>
+<a href="https://f1-schedule-predictions-6b3b8.firebaseapp.com" target="_blank">🏎️ Formula 1 Race Schedule & Predictions Web Application</a>
 
 
 <img width="4064" height="2334" alt="Screenshot 2025-08-20 at 5 12 23 PM" src="https://github.com/user-attachments/assets/34b515fc-138a-4e17-ad2d-2f167c0f7971" />
